@@ -28,10 +28,10 @@
                 <div class="row gy-4">
                     <!-- Pizza Section -->
                     <div class="col-12 col-md-6">
-                        <h2 class="text-primary">Pizza</h2>
+                        <h2 class="text-primary">BreakFast</h2>
                         <ul class="list-group">
                             <li class="list-group-item d-flex flex-column" th:each="item : ${menu}"
-                                th:if="${item['category']} == 'Pizza'">
+                                th:if="${item['category']} == 'Breakfast'">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <strong th:text="${item['name']}"></strong>
                                     <span class="text-success fw-bold" th:text="'$' + ${item['price']}"></span>
@@ -51,10 +51,10 @@
 
                     <!-- Burgers Section -->
                     <div class="col-12 col-md-6">
-                        <h2 class="text-primary">Burgers</h2>
+                        <h2 class="text-primary">Lunch</h2>
                         <ul class="list-group">
                             <li class="list-group-item d-flex flex-column" th:each="item : ${menu}"
-                                th:if="${item['category']} == 'Burgers'">
+                                th:if="${item['category']} == 'Lunch'">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <strong th:text="${item['name']}"></strong>
                                     <span class="text-success fw-bold" th:text="'$' + ${item['price']}"></span>
@@ -74,10 +74,10 @@
 
                     <!-- Pasta Section -->
                     <div class="col-12 col-md-6">
-                        <h2 class="text-primary">Pasta</h2>
+                        <h2 class="text-primary">Dinner</h2>
                         <ul class="list-group">
                             <li class="list-group-item d-flex flex-column" th:each="item : ${menu}"
-                                th:if="${item['category']} == 'Pasta'">
+                                th:if="${item['category']} == 'Dinner'">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <strong th:text="${item['name']}"></strong>
                                     <span class="text-success fw-bold" th:text="'$' + ${item['price']}"></span>
@@ -97,10 +97,10 @@
 
                     <!-- Desserts Section -->
                     <div class="col-12 col-md-6">
-                        <h2 class="text-primary">Desserts</h2>
+                        <h2 class="text-primary">Drinks</h2>
                         <ul class="list-group">
                             <li class="list-group-item d-flex flex-column" th:each="item : ${menu}"
-                                th:if="${item['category']} == 'Desserts'">
+                                th:if="${item['category']} == 'Drinks'">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <strong th:text="${item['name']}"></strong>
                                     <span class="text-success fw-bold" th:text="'$' + ${item['price']}"></span>

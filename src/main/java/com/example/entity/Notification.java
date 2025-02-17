@@ -11,8 +11,9 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String message;
-    private Long orderId; // Reference to the related order
-    private boolean isRead;
+    private long OrderId;
+    private boolean isread;
+    private String roomId;
 	public Long getId() {
 		return id;
 	}
@@ -25,22 +26,29 @@ public class Notification {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Long getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
-	}
 	public boolean isRead() {
-		return isRead;
+		return isread;
 	}
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
+	public void setisRead(boolean isread) {
+		this.isread = isread;
+	}
+	public String getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
+	}
+	
+	public long getOrderId() {
+		return OrderId;
+	}
+	public void setOrderId(Long long1) {
+		OrderId = long1;
 	}
 	@Override
 	public String toString() {
-		return "Notification [id=" + id + ", message=" + message + ", orderId=" + orderId + ", isRead=" + isRead + "]";
+		return "Notification [id=" + id + ", message=" + message + ", OrderId=" + OrderId + ", read=" + isread
+				+ ", roomId=" + roomId + "]";
 	}
-
-    // Getters and Setters
+	
 }

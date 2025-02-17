@@ -20,7 +20,10 @@ public class OrderForm {
 		this.orderId = orderId;
 	}
 	public double totalAmount;
-    public String status;
+    public double getTotalAmount() {
+		return totalAmount;
+	}
+	public String status;
     public String getStatus() {
 		return status;
 	}

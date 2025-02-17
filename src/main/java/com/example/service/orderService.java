@@ -50,8 +50,11 @@ public class orderService {
 	    	 
 	     }
 	     Notification notification = new Notification();
-	     notification.setMessage("New order received");
 	     notification.setOrderId(orderform.getOrderId());
+	     notification.setMessage("New order received");
+	     
+	     notification.setisRead(false);
+	     notification.setRoomId("1");
 	     notificationService.sendNotification(notification);
 	     
 	     
