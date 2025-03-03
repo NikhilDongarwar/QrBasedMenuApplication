@@ -13,6 +13,7 @@ public class OrderForm {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
+	private String RoomId;
     public Long getOrderId() {
 		return orderId;
 	}
@@ -41,13 +42,17 @@ public class OrderForm {
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-	
+	public String getRoomId() {
+		return RoomId;
+	}
+	public void setRoomId(String roomId) {
+		RoomId = roomId;
+	}
 	@Override
 	public String toString() {
-		return "OrderForm [orderId=" + orderId + ", totalAmount=" + totalAmount + ", status=" + status + ", orderDate="
-				+ orderDate + "]";
+		return "OrderForm [orderId=" + orderId + ", RoomId=" + RoomId + ", totalAmount=" + totalAmount + ", status="
+				+ status + ", orderDate=" + orderDate + "]";
 	}
 	
 	
-    // Getters and setters
 }

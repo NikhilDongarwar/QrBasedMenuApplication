@@ -31,6 +31,7 @@ public class orderService {
 		orderform.setOrderDate(orderFormdto.getOrderDate());
 		orderform.setStatus(orderFormdto.getStatus());
 		orderform.setTotalAmount(orderFormdto.getTotalAmount());
+		orderform.setRoomId(orderFormdto.getRoomId());
 	     try {
 		   orderrepo.save(orderform);
 	     }
@@ -54,7 +55,7 @@ public class orderService {
 	     notification.setMessage("New order received");
 	     
 	     notification.setisRead(false);
-	     notification.setRoomId("1");
+	     notification.setRoomId(orderform.getRoomId());
 	     notificationService.sendNotification(notification);
 	     
 	     

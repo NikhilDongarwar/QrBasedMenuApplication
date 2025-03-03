@@ -7,16 +7,18 @@ import com.example.entity.CartEntry;
 
 public class OrderFormDto {
 	
-   
+   private String roomId;
 	private double totalAmount;
     private String status;
+    private String orderDate;
+    private List<CartEntryDTO> cartEntries;
     public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	private String orderDate;
+	
     public String getOrderDate() {
 		return orderDate;
 	}
@@ -24,7 +26,7 @@ public class OrderFormDto {
 		this.orderDate = orderDate;
 	}
 	
-	private List<CartEntryDTO> cartEntries;
+	
 	public double getTotalAmount() {
 		return totalAmount;
 	}
@@ -37,12 +39,17 @@ public class OrderFormDto {
 	public void setCartEntries(List<CartEntryDTO> cartEntries) {
 		this.cartEntries = cartEntries;
 	}
+	public String getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
+	}
 	@Override
 	public String toString() {
-		return "OrderForm [totalAmount=" + totalAmount + ", status=" + status + ", orderDate="
+		return "OrderFormDto [roomId=" + roomId + ", totalAmount=" + totalAmount + ", status=" + status + ", orderDate="
 				+ orderDate + ", cartEntries=" + cartEntries + "]";
 	}
 	
 	
-    // Getters and setters
 }

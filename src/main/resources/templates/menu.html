@@ -5,9 +5,70 @@
     <title>Menu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card {
+            background: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .category-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .list-group-item {
+            border: none;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .list-group-item:hover {
+            background: #e9ecef;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .input-group input {
+            text-align: center;
+            max-width: 70px;
+        }
+    </style>
     <script>
         function updateQuantity(inputId, change) {
-            console.log("inputs are: ", inputId, change);
             const input = document.getElementById(inputId);
             let currentValue = parseInt(input.value) || 0;
             currentValue += change;
@@ -18,102 +79,100 @@
 </head>
 
 <body>
-	<div th:replace="header.html"></div>
-    <div class="container mt-5">
-        <h1 class="text-center">Our Menu</h1>
-        <p class="text-center">Delicious dishes crafted just for you!</p>
+    <div th:replace="header.html"></div>
 
-        <form action="/add-to-cart" method="post">
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Our Menu</h1>
+        <p class="text-center text-muted mb-5">Delicious dishes crafted just for you!</p>
+
+        <form id="menuForm" method="post" action="/add-to-cart">
+            <!-- RoomId Section -->
+            <div class="mb-4">
+                <label for="roomId" class="form-label"><strong>Room ID:</strong></label>
+                <input type="text" class="form-control" id="roomId" th:value="${RoomId}" readonly>
+                <input type="hidden" name="RoomId" id="hiddenRoomId" th:value="${RoomId}">
+            </div>
+
             <!-- Menu Categories -->
-            <div th:if="${menu}">
-                <div class="row gy-4">
-                    <!-- Pizza Section -->
-                    <div class="col-12 col-md-6">
-                        <h2 class="text-primary">BreakFast</h2>
+            <div class="row gy-4">
+                <!-- Breakfast -->
+                <div class="col-md-6">
+                    <div class="category-card">
+                        <h2 class="text-primary">Breakfast</h2>
                         <ul class="list-group">
-                            <li class="list-group-item d-flex flex-column" th:each="item : ${menu}"
-                                th:if="${item['category']} == 'Breakfast'">
+                            <li class="list-group-item d-flex flex-column" th:each="item : ${menu}" th:if="${item['category']} == 'Breakfast'">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <strong th:text="${item['name']}"></strong>
                                     <span class="text-success fw-bold" th:text="'$' + ${item['price']}"></span>
                                 </div>
                                 <p class="mb-1 text-muted" th:text="${item['description']}"></p>
                                 <div class="input-group">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', -1)'">-</button>
-                                    <input type="number" th:id="'quantity-'+${item['id']}"
-                                        th:name="${item['id']}" class="form-control text-center" value="0" min="0">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', 1)'">+</button>
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', -1)'">-</button>
+                                    <input type="number" th:id="'quantity-'+${item['id']}" th:name="${item['id']}" class="form-control text-center" value="0" min="0">
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', 1)'">+</button>
                                 </div>
                             </li>
                         </ul>
                     </div>
+                </div>
 
-                    <!-- Burgers Section -->
-                    <div class="col-12 col-md-6">
+                <!-- Lunch -->
+                <div class="col-md-6">
+                    <div class="category-card">
                         <h2 class="text-primary">Lunch</h2>
                         <ul class="list-group">
-                            <li class="list-group-item d-flex flex-column" th:each="item : ${menu}"
-                                th:if="${item['category']} == 'Lunch'">
+                            <li class="list-group-item d-flex flex-column" th:each="item : ${menu}" th:if="${item['category']} == 'Lunch'">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <strong th:text="${item['name']}"></strong>
                                     <span class="text-success fw-bold" th:text="'$' + ${item['price']}"></span>
                                 </div>
                                 <p class="mb-1 text-muted" th:text="${item['description']}"></p>
                                 <div class="input-group">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', -1)'">-</button>
-                                    <input type="number" th:id="'quantity-'+${item['id']}"
-                                        th:name="${item['id']}" class="form-control text-center" value="0" min="0">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', 1)'">+</button>
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', -1)'">-</button>
+                                    <input type="number" th:id="'quantity-'+${item['id']}" th:name="${item['id']}" class="form-control text-center" value="0" min="0">
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', 1)'">+</button>
                                 </div>
                             </li>
                         </ul>
                     </div>
+                </div>
 
-                    <!-- Pasta Section -->
-                    <div class="col-12 col-md-6">
+                <!-- Dinner -->
+                <div class="col-md-6">
+                    <div class="category-card">
                         <h2 class="text-primary">Dinner</h2>
                         <ul class="list-group">
-                            <li class="list-group-item d-flex flex-column" th:each="item : ${menu}"
-                                th:if="${item['category']} == 'Dinner'">
+                            <li class="list-group-item d-flex flex-column" th:each="item : ${menu}" th:if="${item['category']} == 'Dinner'">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <strong th:text="${item['name']}"></strong>
                                     <span class="text-success fw-bold" th:text="'$' + ${item['price']}"></span>
                                 </div>
                                 <p class="mb-1 text-muted" th:text="${item['description']}"></p>
                                 <div class="input-group">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', -1)'">-</button>
-                                    <input type="number" th:id="'quantity-'+${item['id']}"
-                                        th:name="${item['id']}" class="form-control text-center" value="0" min="0">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', 1)'">+</button>
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', -1)'">-</button>
+                                    <input type="number" th:id="'quantity-'+${item['id']}" th:name="${item['id']}" class="form-control text-center" value="0" min="0">
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', 1)'">+</button>
                                 </div>
                             </li>
                         </ul>
                     </div>
+                </div>
 
-                    <!-- Desserts Section -->
-                    <div class="col-12 col-md-6">
+                <!-- Drinks -->
+                <div class="col-md-6">
+                    <div class="category-card">
                         <h2 class="text-primary">Drinks</h2>
                         <ul class="list-group">
-                            <li class="list-group-item d-flex flex-column" th:each="item : ${menu}"
-                                th:if="${item['category']} == 'Drinks'">
+                            <li class="list-group-item d-flex flex-column" th:each="item : ${menu}" th:if="${item['category']} == 'Drinks'">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <strong th:text="${item['name']}"></strong>
                                     <span class="text-success fw-bold" th:text="'$' + ${item['price']}"></span>
                                 </div>
                                 <p class="mb-1 text-muted" th:text="${item['description']}"></p>
                                 <div class="input-group">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', -1)'">-</button>
-                                    <input type="number" th:id="'quantity-'+${item['id']}"
-                                        th:name="${item['id']}" class="form-control text-center" value="0" min="0">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', 1)'">+</button>
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', -1)'">-</button>
+                                    <input type="number" th:id="'quantity-'+${item['id']}" th:name="${item['id']}" class="form-control text-center" value="0" min="0">
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="'updateQuantity(\'quantity-' + ${item['id']} + '\', 1)'">+</button>
                                 </div>
                             </li>
                         </ul>
@@ -122,8 +181,8 @@
             </div>
 
             <!-- Add to Cart Button -->
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-success">Add to Cart</button>
+            <div class="text-center mt-5">
+                <button type="submit" class="btn btn-success btn-lg">View Cart</button>
             </div>
         </form>
     </div>
