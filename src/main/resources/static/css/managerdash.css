@@ -1,0 +1,72 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    font-family: 'Arial', sans-serif;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background-color: #343a40;
+    color: white;
+    border-right: 1px solid #ddd;
+}
+
+#sidebar h5 {
+    color: #ffc107;
+}
+
+#sidebar .nav-link {
+    color: white;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+#sidebar .nav-link.active {
+    background-color: #ffc107;
+    color: black;
+    font-weight: bold;
+}
+
+#sidebar .nav-link:hover {
+    background-color: #495057;
+}
+
+#content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #ffc107;
+    border: none;
+    color: black;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #e0a800;
+}
+
+.btn-secondary {
+    border: none;
+}
+
+.modal-content {
+    border-radius: 15px;
+}
+
+#qrCodeResult img {
+    border: 2px solid #ffc107;
+    border-radius: 15px;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

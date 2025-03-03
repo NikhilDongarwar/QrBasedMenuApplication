@@ -1,0 +1,81 @@
+/* Header Background and Layout */
+.bg-light {
+    background-color: #343a40 !important; /* Matches the dark theme */
+    border-bottom: 3px solid #ffc107; /* Accent highlight */
+    padding: 1rem;
+    position: sticky; /* Keeps the header fixed at the top */
+    top: 0;
+    z-index: 1000; /* Ensures the header is above other content */
+}
+
+/* Header Container */
+.container {
+    max-width: 1300px;
+    padding: 0 15px;
+}
+
+/* Header Logo */
+
+img {
+    border-radius: 50%; /* Adds a rounded look to the logo */
+    border: 2px solid #ffc107; /* Matches highlighted accents */
+    padding: 3px; /* Adds slight padding for a polished look */
+    width: 80px; /* Adjusted size for better scaling on mobile */
+    height: 80px;
+   
+    display: block;
+}
+
+/* Header Text */
+h1.h4 {
+    color: #ffc107;
+    font-weight: bold;
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* Logout Button */
+.btn-outline-secondary {
+    color: #ffc107;
+    border-color: #ffc107;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #ffc107;
+    color: #343a40;
+    border-color: #ffc107;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 750px) {
+    .bg-light {
+        padding: 0.3rem;
+    }
+
+    h1.h4 {
+        font-size: 1.2rem;
+    }
+
+    img.logo {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-outline-secondary {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.7rem;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-outline-secondary {
+        margin-top: 0.5rem; /* Adds spacing below the button */
+    }
+}
