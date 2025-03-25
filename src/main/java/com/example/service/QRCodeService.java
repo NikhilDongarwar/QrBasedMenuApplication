@@ -20,8 +20,8 @@ public class QRCodeService {
 
 	 public BufferedImage generateQRCode(String roomId) throws WriterException {
 	        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-	       // String qrContent = "http://localhost:9091/api/qr/getmenu/" + roomId;
-	        String qrContent="https://github.com/";
+	       String qrContent = "http://localhost:9091/api/qr/getmenu/" + roomId;
+	       // String qrContent="https://github.com/";
 	        BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 350, 350);
 	        return MatrixToImageWriter.toBufferedImage(bitMatrix);
 	    }

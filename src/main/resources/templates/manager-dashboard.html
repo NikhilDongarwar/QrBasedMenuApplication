@@ -24,6 +24,9 @@
             <li class="nav-item">
                 <a class="nav-link" id="generateQrLink" href="#">Generate QR</a>
             </li>
+			<li class="nav-item">
+			               <a class="nav-link" id="manageMenuLink" href="#">Manage Menu</a>
+			           </li>
         </ul>
     </div>
 
@@ -91,8 +94,32 @@
                 <img id="qrCodeImage" alt="QR Code" src="">
             </div>
         </div>
-    </div>
-
+    
+         
+	<div id="manageMenuSection" style="display: none;">
+	           <h2 class="text-center mb-4">Manage Menu</h2>
+	           <p class="text-center text-muted">View the list of menu items.</p>
+	           <div class="card shadow-sm mb-4">
+	               <div class="card-body">
+	                   <table class="table">
+	                       <thead>
+	                           <tr>
+								  <th>id</th>
+	                               <th>Name</th>
+	                               <th>Description</th>
+	                               <th>Price</th>
+	                               <th>Category</th>
+	                           </tr>
+	                       </thead>
+	                       <tbody id="menuTableBody">
+	                           <!-- Menu items will be displayed dynamically here -->
+	                       </tbody>
+	                   </table>
+	               </div>
+	           </div>
+	       </div>
+	   </div>
+	   
     <script>
         let stompClient = null;
 
@@ -198,22 +225,58 @@
 		        alert("Please enter a Room ID to generate the QR code.");
 		    }
 		}
-
+        
+		// Function to fetch menu items
+		       function loadMenuItems() {
+		           fetch('/manager-menu')
+		               .then(response => response.json())
+		               .then(menuItems => {
+						console.log("menuitemsare:"+ menuItems)
+		                   const menuTableBody = document.getElementById("menuTableBody");
+		                   menuTableBody.innerHTML = menuItems.map(item => `
+		                       <tr>
+								    <td>${item.id}</td>
+		                           <td>${item.name}</td>
+		                           <td>${item.description}</td>
+		                           <td>${item.price}</td>
+		                           <td>${item.category}</td>
+		                       </tr>
+		                   `).join('');
+		               });
+		       }
 
         // Sidebar navigation functionality
         document.getElementById("newOrdersLink").addEventListener("click", function () {
             document.getElementById("newOrdersSection").style.display = "block";
             document.getElementById("generateQrSection").style.display = "none";
+			document.getElementById("manageMenuSection").style.display = "none";
             this.classList.add("active");
             document.getElementById("generateQrLink").classList.remove("active");
+			document.getElementById("manageMenuLink").classList.remove("active");
         });
 
         document.getElementById("generateQrLink").addEventListener("click", function () {
             document.getElementById("generateQrSection").style.display = "block";
             document.getElementById("newOrdersSection").style.display = "none";
+			document.getElementById("manageMenuSection").style.display = "none";
             this.classList.add("active");
             document.getElementById("newOrdersLink").classList.remove("active");
+			document.getElementById("manageMenuLink").classList.remove("active");
         });
+		
+		document.getElementById("manageMenuLink").addEventListener("click", function () {
+		            document.getElementById("manageMenuSection").style.display = "block";
+					document.getElementById("generateQrSection").style.display = "none";
+		            document.getElementById("newOrdersSection").style.display = "none";
+		            this.classList.add("active");
+		            //document.getElementById("newOrdersLink").classList.remove("active");
+					document.getElementById("newOrdersLink").classList.remove("active");
+				 document.getElementById("generateQrLink").classList.remove("active");
+					
+					    // Fetch and display menu items
+					    loadMenuItems();
+		        });
+
 
         // Ensure "New Orders" section is displayed by default on page load
         document.addEventListener("DOMContentLoaded", function () {
@@ -227,4 +290,4 @@
     </script>
 </body>
 
-</html>
+</html>  

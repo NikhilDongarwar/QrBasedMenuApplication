@@ -62,4 +62,12 @@ public class Menu {
     public void setCategory(String category) {
         this.category = category;
     }
+
+	@Override
+	public String toString() {
+		return "Menu [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", category="
+				+ category + "]";
+	}
+    
+    
 }

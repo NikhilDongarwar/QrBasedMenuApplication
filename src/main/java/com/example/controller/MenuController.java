@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.dto.MenuDto;
 import com.example.entity.Menu;
 import com.example.service.MenuService;
 
@@ -88,7 +92,45 @@ public class MenuController {
 	    model.addAttribute("cart", cart);
 	    return "cart"; // Return the cart view
 	}
-
+    
+	@GetMapping("/manager-menu")
+	public ResponseEntity<List<Menu>> manageMenu(Model model) {
+			
+		List<Menu> menu=menuservice.getMenu();
+		
+		
+		 
+		// model.addAttribute("menu", menu);
+		 
+		 return ResponseEntity.status(HttpStatus.ACCEPTED).body(menu);
+		
+	}
+	
+	@PostMapping("/add-to-menu")
+	public ResponseEntity<String> addnewMenuItem(@RequestBody MenuDto menuitem){
+		
+		Menu menu=menuservice.addnewMenuitem(menuitem);
+		
+		if(menu!=null) {
+			return ResponseEntity.ok("Menu Item added succesfully");
+		}
+		
+		 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add Menu Item");
+		
+	}
+	
+	@PostMapping("/update-menu")
+	public ResponseEntity<String> UpdateMenuItem(@RequestBody Menu menu){
+		
+		Menu menu1=menuservice.updateMenuitem(menu);
+		
+		if(menu1!=null) {
+			return ResponseEntity.ok(menu1.toString());
+		}
+		
+		 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update Menu Item");
+		
+	}
 	
 
 	
