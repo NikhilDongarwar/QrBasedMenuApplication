@@ -104,11 +104,12 @@
 	                   <table class="table">
 	                       <thead>
 	                           <tr>
-								  <th>id</th>
+								<th style="display: none;">ID</th>
 	                               <th>Name</th>
 	                               <th>Description</th>
-	                               <th>Price</th>
+	                               <th>Price(INR)</th>
 	                               <th>Category</th>
+								   <th>Edit</th>
 	                           </tr>
 	                       </thead>
 	                       <tbody id="menuTableBody">
@@ -118,6 +119,38 @@
 	               </div>
 	           </div>
 	       </div>
+		   <div class="modal fade" id="editMenuItemModal" tabindex="-1" aria-labelledby="editMenuItemModalLabel" aria-hidden="true">
+		       <div class="modal-dialog">
+		           <div class="modal-content">
+		               <div class="modal-header">
+		                   <h5 class="modal-title" id="editMenuItemModalLabel">Edit Menu Item</h5>
+		                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		               </div>
+		               <div class="modal-body">
+		                   <form id="editMenuItemForm">
+		                       <input type="hidden" id="editMenuItemId">
+		                       <div class="mb-3">
+		                           <label for="editMenuItemName" class="form-label">Name</label>
+		                           <input type="text" class="form-control" id="editMenuItemName" required>
+		                       </div>
+		                       <div class="mb-3">
+		                           <label for="editMenuItemDescription" class="form-label">Description</label>
+		                           <textarea class="form-control" id="editMenuItemDescription" rows="3" required></textarea>
+		                       </div>
+		                       <div class="mb-3">
+		                           <label for="editMenuItemPrice" class="form-label">Price</label>
+		                           <input type="number" class="form-control" id="editMenuItemPrice" required>
+		                       </div>
+		                       <div class="mb-3">
+		                           <label for="editMenuItemCategory" class="form-label">Category</label>
+		                           <input type="text" class="form-control" id="editMenuItemCategory" required>
+		                       </div>
+		                       <button type="button" class="btn btn-primary" onclick="submitEditMenuItem()">Submit</button>
+		                   </form>
+		               </div>
+		           </div>
+		       </div>
+		   </div>
 	   </div>
 	   
     <script>
@@ -235,11 +268,14 @@
 		                   const menuTableBody = document.getElementById("menuTableBody");
 		                   menuTableBody.innerHTML = menuItems.map(item => `
 		                       <tr>
-								    <td>${item.id}</td>
+								<td style="display: none;">${item.id}</td>
 		                           <td>${item.name}</td>
 		                           <td>${item.description}</td>
 		                           <td>${item.price}</td>
 		                           <td>${item.category}</td>
+								   <td>
+								      <button class="btn btn-primary btn-sm" onclick="openEditMenuItemModal(${item.id}, '${item.name}', '${item.description}', ${item.price}, '${item.category}')">Edit</button>
+								     </td>
 		                       </tr>
 		                   `).join('');
 		               });
@@ -276,6 +312,51 @@
 					    // Fetch and display menu items
 					    loadMenuItems();
 		        });
+				
+				
+				function openEditMenuItemModal(id, name, description, price, category) {
+				    document.getElementById("editMenuItemId").value = id;
+				    document.getElementById("editMenuItemName").value = name;
+				    document.getElementById("editMenuItemDescription").value = description;
+				    document.getElementById("editMenuItemPrice").value = price;
+				    document.getElementById("editMenuItemCategory").value = category;
+				
+				    const editModal = new bootstrap.Modal(document.getElementById("editMenuItemModal"));
+				    editModal.show();
+				}
+				
+				// Submit the edited menu item data
+				function submitEditMenuItem() {
+				    const id = document.getElementById("editMenuItemId").value;
+				    const name = document.getElementById("editMenuItemName").value;
+				    const description = document.getElementById("editMenuItemDescription").value;
+				    const price = document.getElementById("editMenuItemPrice").value;
+				    const category = document.getElementById("editMenuItemCategory").value;
+				
+				    const updatedItem = { id, name, description, price, category };
+				
+				    fetch(`/update-menu`, {
+				        method: 'POST',
+				        headers: {
+				            'Content-Type': 'application/json',
+				        },
+				        body: JSON.stringify(updatedItem),
+				    })
+				    .then(response => {
+				        if (response.ok) {
+				            // Reload menu items
+				            loadMenuItems();
+				
+				            // Hide the modal
+				            const editModal = bootstrap.Modal.getInstance(document.getElementById("editMenuItemModal"));
+				            editModal.hide();
+				
+				            alert("Menu item updated successfully!");
+				        } else {
+				            alert("Failed to update the menu item. Please try again.");
+				        }
+				    });
+				}
 
 
         // Ensure "New Orders" section is displayed by default on page load
